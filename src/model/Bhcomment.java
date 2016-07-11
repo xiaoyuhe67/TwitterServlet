@@ -10,13 +10,13 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="Bhcomment",schema="ORA1")
+
 @NamedQuery(name="Bhcomment.findAll", query="SELECT b FROM Bhcomment b")
 public class Bhcomment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="BHCOMMENT_COMMENTID_GENERATOR", sequenceName="BHCOMMENT_ID_SEQ", allocationSize=1)
+	@SequenceGenerator(name="BHCOMMENT_COMMENTID_GENERATOR", sequenceName="BHCOMMENT_ID_SQ")
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="BHCOMMENT_COMMENTID_GENERATOR")
 	private long commentid;
 
@@ -25,11 +25,11 @@ public class Bhcomment implements Serializable {
 
 	private String commenttext;
 
-	private java.math.BigDecimal fromuserid;
+	private long fromuserid;
 
-	private java.math.BigDecimal postid;
+	private long postid;
 
-	private java.math.BigDecimal touserid;
+	private long touserid;
 
 	public Bhcomment() {
 	}
@@ -58,27 +58,27 @@ public class Bhcomment implements Serializable {
 		this.commenttext = commenttext;
 	}
 
-	public java.math.BigDecimal getFromuserid() {
+	public long getFromuserid() {
 		return this.fromuserid;
 	}
 
-	public void setFromuserid(java.math.BigDecimal fromuserid) {
+	public void setFromuserid(long fromuserid) {
 		this.fromuserid = fromuserid;
 	}
 
-	public java.math.BigDecimal getPostid() {
+	public long getPostid() {
 		return this.postid;
 	}
 
-	public void setPostid(java.math.BigDecimal postid) {
+	public void setPostid(long postid) {
 		this.postid = postid;
 	}
 
-	public java.math.BigDecimal getTouserid() {
+	public long getTouserid() {
 		return this.touserid;
 	}
 
-	public void setTouserid(java.math.BigDecimal touserid) {
+	public void setTouserid(long touserid) {
 		this.touserid = touserid;
 	}
 

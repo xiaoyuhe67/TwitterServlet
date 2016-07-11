@@ -77,16 +77,17 @@ You have <input readonly type="text" name="countdown" size="3" value="141" style
 
 
 <div class="container">
+
+<div><input type="submit"  name="method" value="comments" class="button" ></input></div>
 <table border="1" align="center" class="table table-bordered table-hover table-strip">
 <thead> 
 <tr>
-
+	<th><div align="center">Post ID</div>
 	<th><div align="center">Gravatar</div>
 	<th><div align="center">User</div></th>
 	<th><div align="center">Post</div></th>
 	<th><div align="center">Date</div></th>
 	<th><div align="center">Sentiment</div></th>
-	<th><div align="center">Comments</div></th>	
 </tr>
 </thead>
 <tbody>
@@ -94,6 +95,14 @@ You have <input readonly type="text" name="countdown" size="3" value="141" style
 
 <c:forEach var="post" items="${allposts}"> 
 <tr> 
+
+ <td align="center" > 
+     
+    <input type="checkbox" name="postid" value="${post.postid}"
+    <c:if test="${param.postid == post.postid and param.method == 'comments'}" > checked="checked"</c:if> 
+    style="margin: 0 0 0 4px" onclick="radio(this)"></input> 
+     
+   </td>
 <td align="center"> 
 	 <c:set var="myParam" value="${post.bhuser.useremail}"/>       
        <img src=${imageurls[myParam] }  width="20" height="20"></img>
@@ -111,11 +120,7 @@ You have <input readonly type="text" name="countdown" size="3" value="141" style
    <td align="center" >
    <c:set var="mytext" value="${post.posttext}"/>   
    <img src=${happysadurls[mytext] }  width="20" height="20" ></img>  
-   </td>
-    <td align="center" > 
-    <input type="hidden" name="postid" value="${post.postid}"/> 
-   <input type="submit"  name="method" value="comments" class="button" ></input>  
-   </td>
+ 
   </tr> 
 
  </c:forEach> 

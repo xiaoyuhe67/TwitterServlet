@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import customtools.Dataget;
+import model.Bhcomment;
 import model.Bhpost;
 
 /**
@@ -87,10 +88,17 @@ public class newsfeedServlet extends HttpServlet {
 			String postid = request.getParameter("postid"); 
 			long longpostid=Dataget.getpostid(postid);
 			model.Bhpost post=customtools.Dataget.postofpostid(longpostid); 
-			
+			List<Bhcomment> comments=Dataget.commentsofPost(longpostid);
+			HashMap<Long,String> fromusernames=new HashMap<Long,String>();
+		    fromusernames=Dataget.getfromusernameincomment(comments);
+		    
+		    session.setAttribute("fromusernames", fromusernames);	    
+			session.setAttribute("commentsofpost", comments);
 			session.setAttribute("postforcomment", post);
+			
 			session.setAttribute("postid", longpostid);
 			session.setAttribute("postusername", post.getBhuser().getUsername());
+			session.setAttribute("postuserid", post.getBhuser().getBhuserid());
 			session.setAttribute("postuserimage", "https://www.gravatar.com/avatar/"+Util.MD5Util.md5Hex(post.getBhuser().getUseremail())+"?s=80");
 	
 			getServletContext().getRequestDispatcher("/comments.jsp").forward(request, response);;

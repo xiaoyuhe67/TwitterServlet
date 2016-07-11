@@ -45,7 +45,7 @@ public class loginServlet extends HttpServlet {
 		
 		if(request.getParameter("register")!=null)
 		{
-			request.getRequestDispatcher("Register.jsp").forward(request, response);
+			request.getRequestDispatcher("/Register.jsp").forward(request, response);
 		}
 		else
 		{
@@ -81,14 +81,14 @@ public class loginServlet extends HttpServlet {
 					session.setAttribute("happysadurlsbyuser", happysadurlsbyuser);
 					session.setAttribute("posts", posts);
 					
-					request.getRequestDispatcher("home.jsp").forward(request, response);
+					request.getRequestDispatcher("/home.jsp").forward(request, response);
 					
 			}	
 			else
 			{
 				request.setAttribute("loginerror", "The user is not valid");
 			
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
 				
 			}		
 					
@@ -99,7 +99,7 @@ public class loginServlet extends HttpServlet {
 			String message1="There is no match";
 			System.out.println(e.getMessage());
 			request.setAttribute("loginerror", message1);
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 			
 	
 		}

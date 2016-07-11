@@ -46,16 +46,16 @@ function limitText(limitField, limitCount, limitNum) {
 </nav>
 
 
-<form action="commentsServlet" method="get">
+<form action="commentServlet" method="get">
 
 
 <div class="container">
 <table align="center" border="0" class="table">
 <thead>
-<tr ><th>Search posts</th></tr>
+<tr ><th>Search comments</th></tr>
 </thead>
 <tbody>
-<tr style="backgroundcolor:#4db6ac "><td >Please enter post, at most 141 characters:</td></tr>
+<tr style="backgroundcolor:#4db6ac "><td >Please enter comment, at most 141 characters:</td></tr>
 <tr>
 <td>
 <textarea name="limitedtextarea" rows="5" cols="30" onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,141);" 
@@ -69,6 +69,7 @@ You have <input readonly type="text" name="countdown" size="3" value="141" style
 </td>
 </tr>
 <tr><td>
+<input type="submit" name="method" value="Add" class="button"/>
 <input type="submit" name="method" value="Search" class="button"/>
 </td>
 </tr>
@@ -102,41 +103,28 @@ You have <input readonly type="text" name="countdown" size="3" value="141" style
 <thead> 
 <tr>
 
-	<th><div align="center">Gravatar</div></th>
 	<th><div align="center">User</div></th>
-	<th><div align="center">Post</div></th>
-	<th><div align="center">Date</div></th>
-	<th><div align="center">Sentiment</div></th>
-	<th><div align="center">Comments</div></th>	
+	<th><div align="center">Comment</div></th>
+	<th><div align="center">Comment date</div></th>
 </tr>
 </thead>
 <tbody>
 
 
-<c:forEach var="post" items="${allposts}"> 
+<c:forEach var="comment" items="${commentsofpost}"> 
 <tr> 
+
 <td align="center"> 
-	 <c:set var="myParam" value="${post.bhuser.useremail}"/>       
-       <img src=${imageurls[myParam] }  width="20" height="20"></img>
-</td>
-<td align="center"> 
-     <c:out value="${post.bhuser.username}" />
+   <c:set var="mypostid" value="${comment.postid}"/>
+     <c:out value="${fromusernames[mypostid]}" />
    </td>   
    <td align="center"> 
    
-     <c:out   value="${post.posttext}" /> 
+     <c:out   value="${comment.commenttext}" /> 
    </td> 
    <td align="center"> 
-     <fmt:formatDate value="${post.postdate}" pattern="yy-MMM-dd"/>
+     <fmt:formatDate value="${comment.commentdate}" pattern="yy-MMM-dd"/>
    </td> 
-   <td align="center" >
-   <c:set var="mytext" value="${post.posttext}"/>   
-   <img src=${happysadurls[mytext] }  width="20" height="20" ></img>  
-   </td>
-    <td align="center" > 
-    <input type="hidden" name="postid" value="${post.postid}"/> 
-   <input type="submit"  name="method" value="comments" class="button" ></input>  
-   </td>
   </tr> 
 
  </c:forEach> 

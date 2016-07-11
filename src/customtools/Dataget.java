@@ -179,6 +179,20 @@ public class Dataget {
             em.close();
         }
     }
+	
+	public static void insert(Bhcomment bhcomment) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            em.persist(bhcomment);
+            trans.commit();
+        } catch (Exception e) {
+            trans.rollback();
+        } finally {
+            em.close();
+        }
+    }
 	public static void insertuser(Bhuser bhuser) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -357,6 +371,40 @@ public class Dataget {
         return comments;    
     }
     
+    public static Bhuser userofuserid(long userid)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        Bhuser user = null;
+        String qString = "select b from Bhuser b where b.bhuserid = :userid";
+        
+        try{
+            TypedQuery<Bhuser> query = em.createQuery(qString,Bhuser.class);
+            query.setParameter("userid", userid);
+            user = query.getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+                em.close();
+            }
+        return user;    
+    } 
+    
+    
+    public static HashMap<Long,String> getfromusernameincomment(List<Bhcomment> allcomments)
+    {
+    	HashMap<Long,String> fromusernames=new HashMap<Long,String>();
+    	
+    	Bhuser user=null;
+    	for(Bhcomment comment: allcomments)
+    	{
+    		user=userofuserid(comment.getFromuserid());
+    		fromusernames.put(comment.getPostid(), user.getUsername());	
+    		
+    	} 	
+    	return fromusernames;
+    	
+    }
     
     
     public static List<Bhpost> searchPosts (String search)
@@ -376,6 +424,25 @@ public class Dataget {
             em.close();
         }return searchposts;
     }
+    
+    public static List<Bhcomment> searchComments (String search,long postid)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        List<Bhcomment> searchcomments = null;
+        String qString = "select b from Bhcomment b "
+                + "where b.postid=:postid and b.commenttext like :search";
+        
+        try{
+            TypedQuery<Bhcomment> query = em.createQuery(qString,Bhcomment.class);
+            query.setParameter("search", "%" + search + "%");
+            searchcomments = query.getResultList();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            em.close();
+        }return searchcomments;
+    }
+    
     
     public static List<Bhpost> searchPostsbyuser (String search, long userid)
     {
